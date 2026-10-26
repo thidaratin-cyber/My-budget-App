@@ -103,6 +103,14 @@ input[type=number]{font-family:var(--f-num);font-weight:600}
 .monthnav button:hover{background:var(--sky-soft);color:var(--sky-ink)}
 .monthnav span{min-width:128px;text-align:center;font-family:var(--f-display);font-weight:500}
 .banner{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;background:var(--accent-soft);border-radius:22px;padding:12px 18px}
+.mbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:15;display:flex;align-items:center;gap:8px;background:var(--card);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--edge);border-radius:999px;padding:5px;box-shadow:0 6px 20px rgba(30,30,30,.10)}
+.mb-btn{flex:none;border:0;width:40px;height:40px;border-radius:50%;background:var(--sky-soft);color:var(--sky-ink);font-size:20px;line-height:1;cursor:pointer}
+.mb-btn:hover{background:var(--accent);color:var(--accent-ink)}
+.mb-mid{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:center;gap:2px 10px;text-align:center}
+.mb-mid b{font-family:var(--f-display);font-size:17px}
+.mb-mid span{font-size:13px;color:var(--muted);font-family:var(--f-num);font-weight:600}
+.mb-mid span.neg{color:var(--bad)}
+.mb-today{flex:none;border:0;border-radius:999px;padding:6px 12px;background:var(--accent-soft);color:var(--ink);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
 .banner-acts{display:flex;gap:8px;flex-wrap:wrap}
 .banner.slim{padding:6px 8px 6px 16px;border-style:solid}
 .banner.slim #bannerText{flex:1 1 auto}
@@ -230,9 +238,12 @@ details.income .note,details.income .lbl{color:var(--muted)}
 .envs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
 .env{padding:18px;display:grid;gap:10px;align-content:start;min-width:0;position:relative;overflow:hidden;
   background:radial-gradient(120px 120px at 100% 0%,color-mix(in srgb,var(--c) 30%,transparent),transparent 70%),var(--card)}
-.env-h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.env-h{width:100%;border:0;background:transparent;font:inherit;color:inherit;text-align:left;cursor:pointer;padding:0;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .env-h h3{font-size:17px;overflow-wrap:anywhere;display:flex;align-items:center;gap:10px}
-.env-tot{text-align:right;font-family:var(--f-num);font-weight:700;font-variant-numeric:tabular-nums;font-size:20px;white-space:nowrap}
+.env-chev{flex:none;align-self:center;transition:transform .2s;color:var(--muted);font-size:12px;margin-left:4px}
+.env-h[aria-expanded="false"] .env-chev{transform:rotate(-90deg)}
+.env-mini{font-size:13px;color:var(--muted)}
+.env-tot{margin-left:auto;text-align:right;font-family:var(--f-num);font-weight:700;font-variant-numeric:tabular-nums;font-size:20px;white-space:nowrap}
 .env-tot small{display:block;font-family:var(--f-body);font-size:12px;color:var(--muted);font-weight:400}
 .row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:9px 8px;border-radius:18px;background:var(--field)}
 .row+.row{margin-top:6px}
@@ -258,7 +269,7 @@ details.income .note,details.income .lbl{color:var(--muted)}
 .sumcard{padding:18px;display:grid;gap:12px}
 .sumcard summary{list-style:none;cursor:pointer}
 .sumcard summary::-webkit-details-marker{display:none}
-.sumcard[open] .chev{transform:rotate(180deg)}
+.sumcard[open]>summary .chev{transform:rotate(180deg)}
 .sumcard:not([open]){gap:0}
 .sum-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:flex-end}
 .sum-top b{font-family:var(--f-num);font-size:28px;display:block}
@@ -266,6 +277,18 @@ details.income .note,details.income .lbl{color:var(--muted)}
 .sum-row{display:grid;grid-template-columns:minmax(0,8rem) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:14px}
 .sum-row .track{height:12px;background:var(--track);border-radius:999px;overflow:hidden}
 .sum-row .track i{display:block;height:100%;border-radius:999px}
+.sum-btn{border:0;background:transparent;font:inherit;color:inherit;text-align:left;cursor:pointer;padding:4px 6px;border-radius:12px;width:100%}
+.sum-btn:hover{background:var(--field)}
+.sum-detail{display:grid;gap:4px;background:var(--field);border-radius:16px;padding:8px;margin:-2px 0 4px}
+.sd-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;border:0;background:var(--solid);border-radius:12px;padding:6px 10px;font:inherit;color:inherit;text-align:left;cursor:pointer;font-size:13px}
+.sd-row:hover{background:var(--sky-soft)}
+.sd-row b{font-family:var(--f-num)}
+.gfilter{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.gchip{border:0;border-radius:999px;padding:7px 14px;background:var(--card);box-shadow:var(--shadow);font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
+.gchip b{font-family:var(--f-num);font-weight:600;margin-left:4px;color:var(--muted)}
+.gchip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.gchip[aria-pressed="true"] b{color:var(--accent-ink)}
+.gf-acts{margin-left:auto;display:flex;gap:4px}
 .sum-row b{font-family:var(--f-num);text-align:right;white-space:nowrap}
 .sum-row small{color:var(--muted);margin-left:6px;font-weight:400}
 .sum-chips{display:flex;flex-wrap:wrap;gap:6px}
@@ -420,6 +443,12 @@ details.changes summary::-webkit-details-marker{display:none}
     </div>
   </header>
 
+  <div class="mbar" id="mbar" role="navigation" aria-label="เลือกเดือน">
+    <button type="button" class="mb-btn" data-mnav="-1" aria-label="เดือนก่อน">‹</button>
+    <div class="mb-mid"><b id="mbMonth"></b><span id="mbLeft"></span></div>
+    <button type="button" class="mb-today" data-act="gotoday" id="mbToday" hidden>เดือนนี้</button>
+    <button type="button" class="mb-btn" data-mnav="1" aria-label="เดือนถัดไป">›</button>
+  </div>
   <div class="setup" id="setupBox" hidden><b>ยังไม่ได้ใส่ค่า Firebase</b> ตอนนี้แอพเก็บข้อมูลไว้ในเบราว์เซอร์นี้เท่านั้น ใส่ค่า firebaseConfig ใน index.html ตามคู่มือ README แล้วอัปโหลดใหม่</div>
   <div class="banner" id="demoBanner" hidden>
     <p id="bannerText"><b>นี่คือข้อมูลตัวอย่าง</b> ไม่ใช่ข้อมูลของใคร กด “เริ่มใช้งาน” เพื่อเริ่มสมุดงบเปล่าของคุณเอง หรือ “ดูตัวอย่าง” เพื่อลองกดเล่นก่อน</p>
@@ -532,6 +561,7 @@ details.changes summary::-webkit-details-marker{display:none}
       </div>
     </div>
     <div class="searchbox"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="search" type="search" placeholder="ค้นหารายการ เช่น ผ่อนโน้ตบุ๊ก, ค่าเช่า, อาหาร" aria-label="ค้นหารายการ"></div>
+    <div class="gfilter" id="gfilter"></div>
     <div id="groups" style="display:grid;gap:26px"></div>
     <div id="charts" class="charts" hidden></div>
   </section>
@@ -582,8 +612,10 @@ import {getAuth,onAuthStateChanged,signInWithPopup,signInWithRedirect,GoogleAuth
 import {initializeFirestore,persistentLocalCache,persistentMultipleTabManager,doc,collection,onSnapshot,getDoc,getDocs,setDoc,writeBatch,terminate,clearIndexedDbPersistence} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const CONFIGURED=!firebaseConfig.apiKey.startsWith("ใส่");
 (function(){
-const APP_VERSION='1.15.0',APP_DATE='12 ต.ค. 2569';
+const APP_VERSION='1.16.1',APP_DATE='12 ต.ค. 2569';
 const CHANGELOG=[
+  ['1.16.1','แถบเลือกเดือนติดด้านบนตลอดเวลาเลื่อนจอ พร้อมยอดคงเหลือ และปุ่มกลับเดือนนี้'],
+  ['1.16.0','กดดูรายการแต่ละประเภทในการ์ดสรุป ปุ่มกรองตามกลุ่ม และยุบ/ขยายการ์ดแต่ละหมวดได้'],
   ['1.15.0','ข้อมูลตัวอย่างใหม่แบบทั่วไป ปุ่มเริ่มใช้งานและดูตัวอย่าง ผู้ใช้ใหม่เริ่มจากสมุดเปล่า'],
   ['1.14.4','ออกจากระบบแล้วล้างข้อมูลที่ค้างในเครื่องให้อัตโนมัติ และมีปุ่มล้างข้อมูลในหน้า Login สำหรับเครื่องที่ใช้ร่วมกัน'],
   ['1.14.3','แก้บั๊ก: รายได้/รายการหักที่ไม่ได้นับเดือนนี้หายหรือจาง ตอนนี้แสดงทุกรายการ บอกเหตุผล และกด “นับตั้งแต่เดือนนี้” ได้'],
@@ -723,7 +755,7 @@ const BLANK={salary:0,pfOpening:0,incomes:[],preorders:[],deductions:[],cats:[
 ]};
 
 const state={mode:'loading',settings:null,logs:[],paid:[],monthKey:CUR,quickCat:null,qType:'once',view:'list',
-  manage:false,sumOpen:(()=>{try{return localStorage.getItem('sbk.sumOpen')!=='0';}catch(e){return true;}})(),billOpen:{},ahead:{},aheadLoading:{},editItem:null,editLog:null,editCat:null,monthCache:{},prevLogs:{key:null,logs:[]},prevLoading:null};
+  manage:false,groupFilter:'all',sumDetail:null,collapsed:(()=>{try{return new Set(JSON.parse(localStorage.getItem('sbk.collapsed')||'[]'));}catch(e){return new Set();}})(),sumOpen:(()=>{try{return localStorage.getItem('sbk.sumOpen')!=='0';}catch(e){return true;}})(),billOpen:{},ahead:{},aheadLoading:{},editItem:null,editLog:null,editCat:null,monthCache:{},prevLogs:{key:null,logs:[]},prevLoading:null};
 let backend=null,deferred=false;
 
 function norm(s){
@@ -819,6 +851,7 @@ function render(){
   const inst=sumA(itemsIn(key,isInst)), fixed=sumA(itemsIn(key,it=>!isInst(it))), logged=sumL(state.logs);
   const left=net-inst-fixed-logged, di=daysInfo();
   const bb=$('balBig');bb.textContent=fmt(left);bb.classList.toggle('neg',left<0);
+  $('mbMonth').textContent=mLong(key);{const ml=$('mbLeft');ml.textContent=`คงเหลือ ${fmt(left)}`;ml.classList.toggle('neg',left<0);}$('mbToday').hidden=key===CUR;
   if(di.kind==='past'){$('perdayLbl').textContent='เดือนนี้ผ่านไปแล้ว';$('perday').textContent=left>=0?'เหลือ '+fmt(left):'เกิน '+fmt(-left);$('daysLeft').textContent='';}
   else{$('perdayLbl').textContent='ใช้ได้เฉลี่ยวันละ';$('perday').textContent=fmt(Math.max(0,Math.floor(left/di.left)));$('daysLeft').textContent=`อีก ${di.left} วัน (รวมวันนี้)`;}
   {let mid,txt;const r=net>0?left/net:-1;
@@ -995,6 +1028,7 @@ function doodleKey(c){if(c.ico&&DOODLES[c.ico])return c.ico;const n=(c.name||'')
 function doodleSVG(k,size){const d=DOODLES[k]||DOODLES.sparkle;return `<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true"><g stroke="${INK}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">${d.d}</g></svg>`;}
 
 function catIcon(c){return doodleSVG(doodleKey(c),34);}
+function saveCollapsed(){try{localStorage.setItem('sbk.collapsed',JSON.stringify([...state.collapsed]));}catch(e){}}
 function isSaving(c){return c.saving===true||(c.saving!==false&&doodleKey(c)==='piggy');}
 function savingCum(c,key){let t=0;c.items.forEach(it=>{if(!it.start||it.start>key)return;const e=it.end&&it.end<key?it.end:key;t+=(idx(e)-idx(it.start)+1)*(+it.amount||0);});return t+sumL(state.logs.filter(l=>l.cat===c.id));}
 function catTotal(c,key){return sumA(c.items.filter(it=>active(it,key)))+sumL(state.logs.filter(l=>l.cat===c.id));}
@@ -1018,6 +1052,14 @@ function owingHTML(key){
       <div class="owing-amt"><b>${fmt(r.remAmt)}</b><small>${r.remN?`อีก ${r.remN} งวด × ${fmt(+r.it.amount)}`:'ผ่อนครบแล้ว'}</small></div></div>`).join('')}</div>
   </section>`;
 }
+function sumDetailHTML(k,key){
+  let list=[];
+  if(k==='once')list=state.logs.map(l=>({c:catById(l.cat),t:l.note||(catById(l.cat)||{}).name||'',s:`${dShort(l.date)}${l.time?' '+l.time:''}`,v:+l.amt}));
+  else list=itemsIn(key,k==='inst'?isInst:it=>!isInst(it)).map(it=>{const ii=instInfo(it,key);return {c:it.cat,t:it.name,s:ii?`${ii.n}/${ii.total}`:(it.end?'ถึง '+mShort(it.end):'ทุกเดือน'),v:+it.amount,paid:state.paid.includes(it.id)};});
+  list=list.filter(x=>x.c).sort((a,b)=>b.v-a.v);
+  if(!list.length)return '<div class="sum-detail"><div class="note">เดือนนี้ยังไม่มีรายการ</div></div>';
+  return `<div class="sum-detail">${list.map(x=>`<button type="button" class="sd-row" data-goto="${esc(x.c.id)}"><span class="ic" style="width:24px;height:24px" aria-hidden="true">${catIcon(x.c)}</span><span style="min-width:0"><span>${esc(x.t)}</span> <span class="note">· ${esc(x.c.name)} · ${esc(x.s)}${x.paid?' · จ่ายแล้ว':''}</span></span><b>${fmt(x.v)}</b></button>`).join('')}</div>`;
+}
 function summaryHTML(key){
   const net=netIn(key),inst=sumA(itemsIn(key,isInst)),fixed=sumA(itemsIn(key,it=>!isInst(it))),once=sumL(state.logs),tot=inst+fixed+once;
   const sav=state.settings.cats.filter(isSaving).reduce((a,c)=>a+catTotal(c,key),0);
@@ -1025,7 +1067,8 @@ function summaryHTML(key){
   const top=state.settings.cats.map(c=>({c,v:catTotal(c,key)})).filter(x=>x.v>0&&!isSaving(x.c)).sort((a,b)=>b.v-a.v).slice(0,3);
   return `<details class="card sumcard" data-sum="1" aria-label="สรุปค่าใช้จ่าย" ${state.sumOpen?'open':''}><summary class="sum-top"><div><h2 style="font-size:18px">สรุปค่าใช้จ่าย · ${mLong(key)}</h2><span class="note">${state.sumOpen?'แตะเพื่อซ่อน':'แตะเพื่อดูรายละเอียด'}</span></div>
     <div style="display:flex;align-items:center;gap:10px"><div style="text-align:right"><b>${fmt(tot)}</b><span class="note">${net>0?Math.round(tot/net*100)+'% ของเงินเข้าบัญชี '+fmt(net):''}</span></div><span class="chev" aria-hidden="true">▾</span></div></summary>
-    <div class="sum-rows">${rows.map(([n,v,col])=>`<div class="sum-row"><span>${n}</span><span class="track"><i style="width:${tot?v/tot*100:0}%;background:${col}"></i></span><b>${fmt(v)}<small>${tot?Math.round(v/tot*100):0}%</small></b></div>`).join('')}</div>
+    <div class="sum-rows">${rows.map(([n,v,col],i)=>{const k=['inst','fixed','once'][i],open=state.sumDetail===k;
+      return `<button type="button" class="sum-row sum-btn" data-sumd="${k}" aria-expanded="${open}"><span>${n} <span class="rchev" style="display:inline-block;font-size:11px;color:var(--muted);${open?'transform:rotate(180deg)':''}">▾</span></span><span class="track"><i style="width:${tot?v/tot*100:0}%;background:${col}"></i></span><b>${fmt(v)}<small>${tot?Math.round(v/tot*100):0}%</small></b></button>${open?sumDetailHTML(k,key):''}`;}).join('')}</div>
     <div class="sum-chips">${top.length?`<span>ใช้มากสุด: ${top.map(x=>`${esc(x.c.name)} ${fmt(x.v)}`).join(' · ')}</span>`:''}${sav>0?`<span>เงินเก็บเดือนนี้ ${fmt(sav)}${net>0?` (${Math.round(sav/net*100)}% ของรายได้)`:''}</span>`:''}<span>คงเหลือ ${fmt(net-tot)}</span></div></details>`;
 }
 function searchHTML(key,q){
@@ -1044,13 +1087,18 @@ function renderGroups(){
   const key=state.monthKey;
   ensurePrev();
   const q=($('search').value||'').trim();
+  $('gfilter').hidden=!!q;
   if(q){$('groups').innerHTML=searchHTML(key,q);return;}
-  $('groups').innerHTML=Object.entries(GROUPS).map(([g,name])=>{
+  const gf=state.groupFilter;
+  const gt=g=>state.settings.cats.filter(c=>c.group===g).reduce((a,c)=>a+catTotal(c,key),0);
+  $('gfilter').innerHTML=[['all','ทั้งหมด',null],...Object.entries(GROUPS).map(([g,n])=>[g,n,gt(g)])].map(([g,n,v])=>`<button type="button" class="gchip" data-gf="${g}" aria-pressed="${gf===g}">${n}${v!=null?`<b>${fmt(v)}</b>`:''}</button>`).join('')
+    +`<span class="gf-acts"><button type="button" class="link" data-act="collapseall">ยุบทั้งหมด</button><button type="button" class="link" data-act="expandall">ขยายทั้งหมด</button></span>`;
+  $('groups').innerHTML=Object.entries(GROUPS).filter(([g])=>gf==='all'||gf===g).map(([g,name],gi)=>{
     const cats=state.settings.cats.filter(c=>c.group===g);if(!cats.length)return '';
     const tot=cats.reduce((a,c)=>a+catTotal(c,key),0);
     let extra='';
     if(g==='installment'){const n=itemsIn(key,isInst).filter(it=>it.end===key).length;if(n)extra=` · จบเดือนนี้ ${n} รายการ`;}
-    return (g===Object.keys(GROUPS)[0]?summaryHTML(key):'')+(g==='installment'?owingHTML(key):'')+`<section class="group" aria-label="${name}"><div class="group-h"><h2>${name}</h2><span class="note"><span class="num">${fmt(tot)}</span>${extra}</span></div><div class="envs">${cats.map(c=>envelope(c,key)).join('')}</div></section>`;
+    return (gf==='all'&&g===Object.keys(GROUPS)[0]?summaryHTML(key):'')+(g==='installment'?owingHTML(key):'')+`<section class="group" aria-label="${name}"><div class="group-h"><h2>${name}</h2><span class="note"><span class="num">${fmt(tot)}</span>${extra}</span></div><div class="envs">${cats.map(c=>envelope(c,key)).join('')}</div></section>`;
   }).join('')||'<div class="note">ยังไม่มีหมวด เพิ่มได้จากช่องจดรายจ่ายด้านบน</div>';
 }
 function itemForm(it){
@@ -1094,7 +1142,11 @@ function envelope(c,key){
   else if(items.length){const p=items.filter(it=>state.paid.includes(it.id));sub=`จ่ายแล้ว ${p.length}/${items.length}`;}
   const savLine=isSaving(c)?`<div class="savtot"><span>ยอดเงินเก็บสะสมถึง${mLong(key)}</span><b>${fmt(savingCum(c,key))}</b></div>`:'';
   let h=`<article class="card env" style="--c:var(--s${c.color||8})" data-cat="${esc(c.id)}">
-    <div class="env-h"><h3><span class="ic" aria-hidden="true">${catIcon(c)}</span>${esc(c.name)}</h3><div class="env-tot">${fmt(tot)}<small>${sub}</small></div></div>`;
+    <button type="button" class="env-h" data-togglecat="${esc(c.id)}" aria-expanded="${!state.collapsed.has(c.id)}"><h3><span class="ic" aria-hidden="true">${catIcon(c)}</span>${esc(c.name)}</h3><div class="env-tot">${fmt(tot)}<small>${sub}</small></div><span class="chev env-chev" aria-hidden="true">▾</span></button>`;
+  if(state.collapsed.has(c.id)&&state.editCat!==c.id&&state.editItem==null&&state.editLog==null){
+    const n=items.length+logs.length+later.length+pres.length+pendI.length;
+    return h+`<div class="env-mini">${n?`${n} รายการ`:'ยังไม่มีรายการ'} · แตะชื่อหมวดเพื่อดู</div></article>`;
+  }
   h+=savLine;
   const bi=billInfo(c,key);if(bi&&state.editCat!==c.id)h+=billHTML(bi,key,c.id);
   if((+c.budget||0)>0){const p=tot/c.budget*100;h+=`<div class="bar"><i class="${p>=100?'bad':p>=85?'warn':''}" style="width:${Math.min(100,p)}%;${p<85?'background:var(--c)':''}"></i></div>`;}
@@ -1362,7 +1414,10 @@ document.addEventListener('click',ev=>{
     if(pay!==state.monthKey)entry.pay=pay;
     state.settings.preorders=state.settings.preorders.filter(x=>x.id!==p.id);saveSettingsQuiet();addLogToMonth(pay,entry);
     toast(`รับสินค้าแล้ว · นับ ${fmt(+p.amt)} เข้าเดือน ${mShort(pay)}`);return;}
-  const gt=ev.target.closest('[data-goto]');if(gt){$('search').value='';render();const el=document.querySelector(`[data-cat="${gt.dataset.goto}"]`);el&&el.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  const tc=ev.target.closest('[data-togglecat]');if(tc){const id=tc.dataset.togglecat;state.collapsed.has(id)?state.collapsed.delete(id):state.collapsed.add(id);saveCollapsed();render();return;}
+  const gfb=ev.target.closest('[data-gf]');if(gfb){state.groupFilter=gfb.dataset.gf;render();return;}
+  const sd=ev.target.closest('[data-sumd]');if(sd){state.sumDetail=state.sumDetail===sd.dataset.sumd?null:sd.dataset.sumd;render();return;}
+  const gt=ev.target.closest('[data-goto]');if(gt){$('search').value='';render();state.collapsed.delete(gt.dataset.goto);saveCollapsed();state.groupFilter='all';render();const el=document.querySelector(`[data-cat="${gt.dataset.goto}"]`);el&&el.scrollIntoView({behavior:'smooth',block:'center'});return;}
   const on=ev.target.closest('[data-oninc],[data-onded]');if(on){
     const list=on.dataset.oninc?state.settings.incomes:state.settings.deductions,id=on.dataset.oninc||on.dataset.onded,d=list.find(x=>x.id===id);
     if(d){d.start=state.monthKey;d.end='';saveSettings();toast(`นับ ${d.name} ตั้งแต่${mLong(state.monthKey)}แล้ว`);}return;}
@@ -1387,11 +1442,14 @@ document.addEventListener('click',ev=>{
     case 'export':doExport();break;
     case 'doimport':doImport();break;
     case 'cancelimport':pendingImport=null;$('importConfirm').hidden=true;$('importFile').value='';break;
+    case 'collapseall':state.settings.cats.forEach(c=>state.collapsed.add(c.id));saveCollapsed();render();break;
+    case 'expandall':state.collapsed.clear();saveCollapsed();render();break;
+    case 'gotoday':shiftMonth(idx(CUR)-idx(state.monthKey));break;
     case 'peek':state.demoPeek=true;render();break;
     case 'log':{state.quickCat=id;const c=catById(id);state.qType=c.group==='installment'?'installment':c.group==='fixed'?'recurring':'once';renderChips();
       $('slip').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
       $({once:'qAmt',installment:'iName',recurring:'rName'}[state.qType]).focus({preventScroll:true});break;}
-    case 'editcat':state.editCat=id;render();break;
+    case 'editcat':state.editCat=id;state.collapsed.delete(id);saveCollapsed();render();break;
     case 'cancel':state.editItem=state.editLog=state.editCat=null;document.activeElement&&document.activeElement.blur();render();break;
     case 'managecats':state.manage=!state.manage;renderChips();break;
     case 'newcat':$('newCatForm').hidden=false;$('ncName').focus();break;
